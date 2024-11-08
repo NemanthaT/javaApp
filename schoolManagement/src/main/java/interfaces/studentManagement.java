@@ -50,6 +50,7 @@ public class studentManagement extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        closeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 590));
@@ -142,7 +143,7 @@ public class studentManagement extends javax.swing.JFrame {
         jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 850, 260));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 850, 260));
 
         jPanel5.setBackground(new java.awt.Color(102, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -179,6 +180,15 @@ public class studentManagement extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         jLabel6.setText("Student Manager");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 200, -1));
+
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        closeBtn.setText("X");
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 50, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,6 +239,11 @@ public class studentManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_deleteActionPerformed
 
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_closeBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +282,7 @@ public class studentManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressField;
     private javax.swing.JTextField ageField;
+    private javax.swing.JButton closeBtn;
     private javax.swing.JButton delete;
     private javax.swing.JComboBox<String> genderCombo;
     private javax.swing.JButton insert;

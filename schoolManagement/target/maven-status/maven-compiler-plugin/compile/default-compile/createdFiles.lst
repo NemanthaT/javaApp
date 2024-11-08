@@ -1,27 +1,44 @@
 interfaces\studentManagement$2.class
 interfaces\grading$2.class
+<<<<<<< HEAD
+=======
+interfaces\courseManagement$10.class
+>>>>>>> c4ccdbe0b22cc79883e51c1f393272b0043df45c
 interfaces\courseManagement$2.class
 com\mycompany\schoolmanagement\SchoolManagement.class
 interfaces\adminDashboard$3.class
 interfaces\studentManagement$7.class
 interfaces\courseManagement$7.class
 interfaces\courseManagement.class
+interfaces\courseAssigning$2.class
+interfaces\teacherManagement$9.class
 interfaces\adminDashboard$2.class
 interfaces\studentManagement.class
 interfaces\courseManagement$5.class
 interfaces\studentManagement$5.class
 interfaces\studentManagement$8.class
+interfaces\courseManagement$11.class
 interfaces\courseManagement$3.class
+<<<<<<< HEAD
 interfaces\grading$1.class
 interfaces\studentManagement$3.class
 interfaces\courseAssigning.class
 codes\DBconnect.class
+=======
+interfaces\courseManagement$8.class
+interfaces\grading$3.class
+interfaces\grading$1.class
+interfaces\studentManagement$3.class
+interfaces\courseAssigning.class
+>>>>>>> c4ccdbe0b22cc79883e51c1f393272b0043df45c
 interfaces\courseManagement$6.class
 interfaces\adminDashboard$4.class
 interfaces\teacherManagement$8.class
+interfaces\studentManagement$10.class
 interfaces\studentManagement$4.class
 interfaces\adminDashboard.class
 interfaces\studentManagement$6.class
+codes\dBConnector.class
 interfaces\courseManagement$1.class
 interfaces\grading.class
 interfaces\studentManagement$9.class
@@ -29,3 +46,7 @@ interfaces\courseManagement$4.class
 interfaces\studentManagement$1.class
 interfaces\adminDashboard$1.class
 interfaces\courseAssigning$1.class
+<<<<<<< HEAD
+=======
+interfaces\courseManagement$9.class
+>>>>>>> c4ccdbe0b22cc79883e51c1f393272b0043df45c
