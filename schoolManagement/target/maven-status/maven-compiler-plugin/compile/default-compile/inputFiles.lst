@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\codes\dBConnector.java
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\com\mycompany\schoolmanagement\SchoolManagement.java
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\interfaces\adminDashboard.java
@@ -6,3 +7,14 @@ C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolMan
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\interfaces\grading.java
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\interfaces\studentManagement.java
 C:\Sandeep\IS\2nd Year\Semester 1\IS2104 Rapid Application Development\schoolManagementNetBeans\javaApp\schoolManagement\src\main\java\interfaces\teacherManagement.java
+=======
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\codes\DBconnect.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\codes\dBConnector.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\com\mycompany\schoolmanagement\SchoolManagement.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\adminDashboard.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\courseAssigning.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\courseManagement.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\grading.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\studentManagement.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\teacherManagement.java
+>>>>>>> fa28c96255a5a43c2366d804a2152edeede5d2d3
