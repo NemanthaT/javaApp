@@ -4,17 +4,21 @@
  */
 package interfaces;
 
+import codes.DBconnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author navindu
  */
 public class teacherManagement extends javax.swing.JFrame {
 
-    /**
-     * Creates new form teacherManagement
-     */
+    Connection conn =null;
+    PreparedStatement pst=null;
     public teacherManagement() {
         initComponents();
+        
     }
 
     /**
@@ -191,7 +195,7 @@ public class teacherManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
-        // TODO add your handling code here:
+         
         this.dispose();
     }//GEN-LAST:event_insertActionPerformed
 
