@@ -32,15 +32,15 @@ public class teacherManagement extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
+        ageField = new javax.swing.JTextField();
+        subjectField = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         update = new javax.swing.JButton();
         insert = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        contactField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -71,9 +71,9 @@ public class teacherManagement extends javax.swing.JFrame {
 
         jLabel4.setText("Contact");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 575, 47, -1));
-        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 19, 229, -1));
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 59, 229, -1));
-        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 100, 229, -1));
+        jPanel4.add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 19, 229, -1));
+        jPanel4.add(ageField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 59, 229, -1));
+        jPanel4.add(subjectField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 100, 229, -1));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,12 +109,12 @@ public class teacherManagement extends javax.swing.JFrame {
         jLabel5.setText("Contact");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 148, 47, -1));
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        contactField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                contactFieldActionPerformed(evt);
             }
         });
-        jPanel4.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 145, 229, -1));
+        jPanel4.add(contactField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 145, 229, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 510, 190));
 
@@ -200,9 +200,9 @@ public class teacherManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_updateActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void contactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_contactFieldActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
@@ -245,6 +245,8 @@ public class teacherManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ageField;
+    private javax.swing.JTextField contactField;
     private javax.swing.JButton delete;
     private javax.swing.JButton insert;
     private javax.swing.JButton jButton4;
@@ -263,11 +265,9 @@ public class teacherManagement extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField subjectField;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

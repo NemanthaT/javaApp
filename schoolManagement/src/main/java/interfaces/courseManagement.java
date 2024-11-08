@@ -32,15 +32,13 @@ public class courseManagement extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        cName = new javax.swing.JTextField();
+        description = new javax.swing.JTextField();
+        hour = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         update = new javax.swing.JButton();
         insert = new javax.swing.JButton();
         delete = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -62,17 +60,17 @@ public class courseManagement extends javax.swing.JFrame {
         jLabel1.setText("Course Name");
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 22, 93, -1));
 
-        jLabel2.setText("Instructor");
+        jLabel2.setText("Description");
         jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 62, 87, -1));
 
-        jLabel3.setText("Description");
+        jLabel3.setText("Credit Hours");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 103, 69, -1));
 
         jLabel4.setText("Contact");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 575, 47, -1));
-        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 19, 229, -1));
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 59, 229, -1));
-        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 100, 229, -1));
+        jPanel4.add(cName, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 19, 229, -1));
+        jPanel4.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 59, 229, -1));
+        jPanel4.add(hour, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 100, 229, -1));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,16 +103,6 @@ public class courseManagement extends javax.swing.JFrame {
         });
         jPanel4.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 100, -1, -1));
 
-        jLabel5.setText("Credit Hours");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 148, 47, -1));
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 142, 229, -1));
-
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 510, 190));
 
         jTable1.setBackground(new java.awt.Color(204, 204, 204));
@@ -122,13 +110,13 @@ public class courseManagement extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "id", "Name", "Instructor", "Description", "Credit hours"
+                "id", "Name", "Description", "Credit hours"
             }
         ));
         jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
@@ -208,10 +196,6 @@ public class courseManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_insertActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
-
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -253,14 +237,16 @@ public class courseManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cName;
     private javax.swing.JButton delete;
+    private javax.swing.JTextField description;
+    private javax.swing.JTextField hour;
     private javax.swing.JButton insert;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -271,11 +257,7 @@ public class courseManagement extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
