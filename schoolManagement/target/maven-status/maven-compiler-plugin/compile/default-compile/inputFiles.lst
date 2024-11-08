@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\codes\DBconnect.java
+C:\Users\navindu\javaApp\schoolManagement\src\main\java\codes\dBConnector.java
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\com\mycompany\schoolmanagement\SchoolManagement.java
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\adminDashboard.java
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\courseAssigning.java
@@ -7,13 +7,3 @@ C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\courseManagem
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\grading.java
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\studentManagement.java
 C:\Users\navindu\javaApp\schoolManagement\src\main\java\interfaces\teacherManagement.java
-=======
-C:\java\javaApp\schoolManagement\src\main\java\codes\dBConnector.java
-C:\java\javaApp\schoolManagement\src\main\java\com\mycompany\schoolmanagement\SchoolManagement.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\adminDashboard.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\courseAssigning.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\courseManagement.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\grading.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\studentManagement.java
-C:\java\javaApp\schoolManagement\src\main\java\interfaces\teacherManagement.java
->>>>>>> c4ccdbe0b22cc79883e51c1f393272b0043df45c
