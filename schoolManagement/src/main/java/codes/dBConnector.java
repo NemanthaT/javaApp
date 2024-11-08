@@ -4,11 +4,9 @@
  */
 package codes;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 import java.sql.SQLException;
 
 /**
@@ -19,7 +17,7 @@ public class dBConnector {
 
         
         public static void main(String[] args) {
-            String connectString = "jdbc:mysql://localhost:3306/car?useSSL=false";
+            String connectString = "jdbc:mysql://localhost:3306/stmgtsis";
             String username = "root";
             String password = "";
             //Database connection
