@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
+import codes.dBConnector;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,8 +17,11 @@ public class courseAssigning extends javax.swing.JFrame {
     /**
      * Creates new form courseAssigning
      */
+    Statement statement = null;
+    Connection connection = null;
     public courseAssigning() {
         initComponents();
+        connection = dBConnector.connection();
     }
 
     /**
@@ -28,17 +35,22 @@ public class courseAssigning extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         searchStudent = new javax.swing.JPanel();
-        searchField = new javax.swing.JTextField();
+        sField = new javax.swing.JTextField();
         search = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        stCombo = new javax.swing.JComboBox<>();
+        iBtn = new javax.swing.JButton();
+        UBtn = new javax.swing.JButton();
+        cCombo = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         closeBtn = new javax.swing.JButton();
+        viewAllBtn = new javax.swing.JButton();
+        clearAllBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 590));
@@ -48,9 +60,14 @@ public class courseAssigning extends javax.swing.JFrame {
         searchStudent.setBackground(new java.awt.Color(102, 102, 102));
         searchStudent.setBorder(javax.swing.BorderFactory.createTitledBorder("Search"));
         searchStudent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        searchStudent.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 24, 522, -1));
+        searchStudent.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 24, 522, -1));
 
         search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
         searchStudent.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(636, 24, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
@@ -59,30 +76,58 @@ public class courseAssigning extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 150, 40));
+        stCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        stCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stComboActionPerformed(evt);
+            }
+        });
+        jPanel2.add(stCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 150, 40));
 
-        jButton1.setText("jButton1");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 110, 30));
+        iBtn.setText("Insert");
+        iBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(iBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 110, 30));
 
-        jButton2.setText("jButton2");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 110, 30));
+        UBtn.setText("Update");
+        UBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(UBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 110, 30));
+
+        cCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        cCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cComboActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 150, 40));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Course");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 60, 30));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Student");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 36, 60, 30));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "courseId", "studentId"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 150));
 
@@ -93,6 +138,15 @@ public class courseAssigning extends javax.swing.JFrame {
                 closeBtnActionPerformed(evt);
             }
         });
+
+        viewAllBtn.setText("View All");
+        viewAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllBtnActionPerformed(evt);
+            }
+        });
+
+        clearAllBtn.setText("Clear All");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +164,7 @@ public class courseAssigning extends javax.swing.JFrame {
                         .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 64, Short.MAX_VALUE)
+                .addGap(0, 65, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(searchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,7 +173,12 @@ public class courseAssigning extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(214, 214, 214))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(viewAllBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(clearAllBtn))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(87, 87, 87))))
         );
         layout.setVerticalGroup(
@@ -134,7 +193,11 @@ public class courseAssigning extends javax.swing.JFrame {
                         .addComponent(searchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(viewAllBtn)
+                            .addComponent(clearAllBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,6 +212,118 @@ public class courseAssigning extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
+
+    private void stComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stComboActionPerformed
+        // TODO add your handling code here:
+        String sqls = "Select StudentID From student";
+        
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+        
+            while(result.next()){
+                int data = result.getInt("StudentID");
+                cCombo.addItem(Integer.toString(data));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_stComboActionPerformed
+
+    private void cComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cComboActionPerformed
+        // TODO add your handling code here:
+        String sqls = "Select CourseID From course";
+        
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+        
+            while(result.next()){
+                int data = result.getInt("CourseID");
+                cCombo.addItem(Integer.toString(data));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_cComboActionPerformed
+
+    private void iBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iBtnActionPerformed
+        // TODO add your handling code here:
+        String sqls = "INSERT INTO studentcourse VALUES(/'"+ stCombo.getSelectedItem() +"\' "+ cCombo.getSelectedItem() +"\') ";
+
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate(sqls);
+            JOptionPane.showMessageDialog(null, "Data added successfully");
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_iBtnActionPerformed
+
+    private void UBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UBtnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_UBtnActionPerformed
+
+    private void viewAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBtnActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String sqls = "SELECT * FROM studentcourse";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            
+            while(result.next()){
+                int id1 = result.getInt("CourseID");
+                int id2 = result.getInt("StudentID");
+                model.addRow(new Object[]{id1, id2});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_viewAllBtnActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String name = sField.getText();
+        
+        int id;
+        String sqls2 = "SELECT * FROM studentcourse WHERE student_id";
+        String sqls1 = "SELECT StudentID FROM student WHERE Name like %\'" + name + "\'";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls1);
+            id = result.getInt("StudentID");
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            try{
+                statement = connection.createStatement();
+                result = statement.executeQuery(sqls2);
+                while(result.next()){
+                    int id1 = result.getInt("course_id");
+                    int id2 = result.getInt("student_id");
+                    model.addRow(new Object[]{id1, id2});
+                }
+            }
+            catch(Exception e){
+               JOptionPane.showMessageDialog(null, e); 
+            }
+            
+
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_searchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,18 +361,23 @@ public class courseAssigning extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton UBtn;
+    private javax.swing.JComboBox<String> cCombo;
+    private javax.swing.JButton clearAllBtn;
     private javax.swing.JButton closeBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton iBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField sField;
     private javax.swing.JButton search;
-    private javax.swing.JTextField searchField;
     private javax.swing.JPanel searchStudent;
+    private javax.swing.JComboBox<String> stCombo;
+    private javax.swing.JTable table;
+    private javax.swing.JButton viewAllBtn;
     // End of variables declaration//GEN-END:variables
 }

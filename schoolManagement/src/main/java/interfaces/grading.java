@@ -4,6 +4,13 @@
  */
 package interfaces;
 
+import codes.dBConnector;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author UserK
@@ -13,6 +20,9 @@ public class grading extends javax.swing.JFrame {
     /**
      * Creates new form grading
      */
+    Connection connection = null;
+    Statement statement = null;
+    
     public grading() {
         initComponents();
     }
@@ -29,35 +39,37 @@ public class grading extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        sBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         subjectCombo = new javax.swing.JComboBox<>();
         gradeCombo = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        insertBtn = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         closeBtn = new javax.swing.JButton();
+        viewAllBtn = new javax.swing.JButton();
+        clearAllBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 590));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jLabel6.setText("Grading");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
+        jLabel6.setText("Teacher Assigning");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Search"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 24, 522, -1));
 
-        jButton1.setText("Search");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(636, 24, -1, -1));
+        sBtn.setText("Search");
+        jPanel1.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(636, 24, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 786, 73));
 
@@ -68,10 +80,10 @@ public class grading extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Subject");
+        jLabel1.setText("CourseId");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        jLabel2.setText("Grade");
+        jLabel2.setText("TeacherId");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
         subjectCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Maths", "Science", "Sinhala", "Buddhism", "English", "History", "Commerce", "Civic", "Art", "Dancing", "Music", "Art", "IT", "Health" }));
@@ -80,16 +92,16 @@ public class grading extends javax.swing.JFrame {
         gradeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "A", "B", "C", "S", "W" }));
         jPanel3.add(gradeCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
 
-        jButton2.setText("Insert");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+        insertBtn.setText("Insert");
+        jPanel3.add(insertBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
 
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                updateBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
+        jPanel3.add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 410, 160));
 
@@ -97,24 +109,29 @@ public class grading extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "studentId", "courseId", "grade"
+                "courseId", "courseName", "teacherId"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(table);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 160));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 830, 160));
 
-        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         closeBtn.setText("X");
         closeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,17 +140,51 @@ public class grading extends javax.swing.JFrame {
         });
         getContentPane().add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 50, 40));
 
+        viewAllBtn.setText("View All");
+        viewAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(viewAllBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, -1, -1));
+
+        clearAllBtn.setText("Clear All");
+        getContentPane().add(clearAllBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 310, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+    }//GEN-LAST:event_updateBtnActionPerformed
 
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
+
+    private void viewAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBtnActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String sqls = "SELECT * FROM studentcourse";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            
+            while(result.next()){
+                int id1 = result.getInt("CourseID");
+                int id2 = result.getInt("StudentID");
+                model.addRow(new Object[]{id1, id2});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_viewAllBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,11 +222,10 @@ public class grading extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clearAllBtn;
     private javax.swing.JButton closeBtn;
     private javax.swing.JComboBox<String> gradeCombo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton insertBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
@@ -184,8 +234,11 @@ public class grading extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton sBtn;
     private javax.swing.JComboBox<String> subjectCombo;
+    private javax.swing.JTable table;
+    private javax.swing.JButton updateBtn;
+    private javax.swing.JButton viewAllBtn;
     // End of variables declaration//GEN-END:variables
 }
