@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
-
+import codes.dBConnector; //dB connect
+import com.mysql.cj.protocol.Resultset;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author navindu
@@ -13,8 +17,12 @@ public class studentManagement extends javax.swing.JFrame {
     /**
      * Creates new form studentManagement
      */
+    Connection connection = null;
+    Statement statement = null;
+    
     public studentManagement() {
         initComponents();
+        connection = dBConnector.connection();
     }
 
     /**
@@ -35,22 +43,24 @@ public class studentManagement extends javax.swing.JFrame {
         nameField = new javax.swing.JTextField();
         ageField = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        update = new javax.swing.JButton();
-        insert = new javax.swing.JButton();
-        delete = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         addressField = new javax.swing.JTextField();
         genderCombo = new javax.swing.JComboBox<>();
+        insert = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        sField = new javax.swing.JTextField();
+        sBtn = new javax.swing.JButton();
+        clearAll = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         closeBtn = new javax.swing.JButton();
+        viewAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 590));
@@ -82,30 +92,6 @@ public class studentManagement extends javax.swing.JFrame {
         });
         jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 572, -1, -1));
 
-        update.setText("Update");
-        update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateActionPerformed(evt);
-            }
-        });
-        jPanel4.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 59, -1, -1));
-
-        insert.setText("Insert");
-        insert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertActionPerformed(evt);
-            }
-        });
-        jPanel4.add(insert, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 19, -1, -1));
-
-        delete.setText("Delete");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-        jPanel4.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 100, -1, -1));
-
         jLabel5.setText("Address");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 148, 47, -1));
 
@@ -124,26 +110,54 @@ public class studentManagement extends javax.swing.JFrame {
         });
         jPanel4.add(genderCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 100, -1, -1));
 
+        insert.setText("Insert");
+        insert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertActionPerformed(evt);
+            }
+        });
+        jPanel4.add(insert, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 19, -1, -1));
+
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+        jPanel4.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 59, -1, -1));
+
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 100, -1, -1));
+
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 510, 190));
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTable1.setForeground(new java.awt.Color(255, 255, 102));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setBackground(new java.awt.Color(204, 204, 204));
+        table.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "id", "Name", "Instructor", "Description", "Credit hours"
+                "id", "Student Name", "Age", "Gender", "Address"
             }
-        ));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 850, 260));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        table.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(table);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 850, 240));
 
         jPanel5.setBackground(new java.awt.Color(102, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,20 +174,28 @@ public class studentManagement extends javax.swing.JFrame {
         jPanel3.setForeground(new java.awt.Color(255, 0, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        sField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                sFieldActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
+        jPanel3.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 519, -1));
 
-        jButton4.setText("Enter");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        sBtn.setText("Enter");
+        sBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                sBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(637, 18, -1, -1));
+        jPanel3.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
+
+        clearAll.setText("Clear All");
+        clearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllActionPerformed(evt);
+            }
+        });
+        jPanel3.add(clearAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 760, 60));
 
@@ -189,6 +211,14 @@ public class studentManagement extends javax.swing.JFrame {
             }
         });
         jPanel1.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 50, 40));
+
+        viewAll.setText("View All");
+        viewAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllActionPerformed(evt);
+            }
+        });
+        jPanel1.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 120, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,41 +238,177 @@ public class studentManagement extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_updateActionPerformed
-
-    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_insertActionPerformed
-
     private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressFieldActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void sFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_sFieldActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void sBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        String name;
+        name = sField.getText();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String sqls = "SELECT * FROM student WHERE Name LIKE \'" + name + "%\'";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            
+            while(result.next()){
+                int id = result.getInt("StudentID");
+                String nam = result.getString("Name");
+                String age = result.getString("Age");
+                String Gender = result.getString("Gender");
+                String Address = result.getString("Address");
+
+                model.addRow(new Object[]{id, nam, age, Gender,Address});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_sBtnActionPerformed
 
     private void genderComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_genderComboActionPerformed
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_deleteActionPerformed
-
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
+
+    private void viewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        String sqls = "SELECT * FROM student";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+
+            while(result.next()){
+                int id = result.getInt("StudentID");
+                String nam = result.getString("Name");
+                String age = result.getString("Age");
+                String Gender = result.getString("Gender");
+                String Address = result.getString("Address");
+
+                model.addRow(new Object[]{id, nam, age, Gender,Address});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }//GEN-LAST:event_viewAllActionPerformed
+
+    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
+        // TODO add your handling code here:
+        int id ;
+        String name;
+        int age=0;
+        String Gender;
+        String Address;
+
+        name = nameField.getText();
+        age = Integer.parseInt(ageField.getText());
+        Gender = (String) genderCombo.getSelectedItem();
+        Address = addressField.getText();
+
+        String sqls = "INSERT INTO student (Name,Age, Gender,Address) VALUES (\'"+name+"\', \'"+age+"\', \'"+Gender+"\', \'"+Address+"\')";
+
+        if((!name.isEmpty()) && (age!=0) && (!Gender.isEmpty())&&(!Address.isEmpty())){
+            try{
+                statement = connection.createStatement();
+                statement.executeUpdate(sqls);
+                System.out.println("Data inserted successfully");
+                JOptionPane.showMessageDialog(null,"Inserted Successfully");
+            }
+            catch(Exception e){
+                System.out.println("Data insertion failed");
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter all details");
+        }
+    }//GEN-LAST:event_insertActionPerformed
+
+    private void clearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+
+        sField.setText("");
+        nameField.setText("");
+        ageField.setText("");
+        addressField.setText("");
+        genderCombo.setSelectedItem("");
+    }//GEN-LAST:event_clearAllActionPerformed
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+        String name;
+        int age=0;
+        String Gender;
+        String Address;
+
+        name = nameField.getText();
+        age = Integer.parseInt(ageField.getText());
+        Gender = (String) genderCombo.getSelectedItem();
+        Address = addressField.getText();
+
+        if(name!=null){
+            String sqls = "UPDATE student SET Age = \'" + age + "\', Gender = \'" + Gender + "\', Address = \'" + Address +"\' WHERE Name LIKE \'" + name + "\'";
+
+            try{
+                statement = connection.createStatement();
+                statement.executeUpdate(sqls);
+                System.out.println("Data updated successfully");
+                JOptionPane.showMessageDialog(null,"Updated Successfully");
+            }
+            catch(Exception e){
+                System.out.println("Data insertion failed");
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter student name");
+        }
+
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        String name;
+
+        name = nameField.getText();
+
+        String sqls = "DELETE FROM student WHERE Name LIKE \'" + name + "\'";
+
+        if(name!=null){
+            try{
+                statement = connection.createStatement();
+                statement.executeUpdate(sqls);
+                System.out.println("Data deleted successfully");
+                JOptionPane.showMessageDialog(null,"Deleted Successfully");
+            }
+            catch(Exception e){
+                System.out.println("Data deletion failed");
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter course name");
+        }
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,11 +448,11 @@ public class studentManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressField;
     private javax.swing.JTextField ageField;
+    private javax.swing.JButton clearAll;
     private javax.swing.JButton closeBtn;
     private javax.swing.JButton delete;
     private javax.swing.JComboBox<String> genderCombo;
     private javax.swing.JButton insert;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -300,10 +466,12 @@ public class studentManagement extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField nameField;
+    private javax.swing.JButton sBtn;
+    private javax.swing.JTextField sField;
+    private javax.swing.JTable table;
     private javax.swing.JButton update;
+    private javax.swing.JButton viewAll;
     // End of variables declaration//GEN-END:variables
 }

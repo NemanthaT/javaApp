@@ -171,7 +171,7 @@ public class courseManagement extends javax.swing.JFrame {
                 sBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+        jPanel3.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, -1));
 
         clearAll.setText("Clear All");
         clearAll.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +179,7 @@ public class courseManagement extends javax.swing.JFrame {
                 clearAllActionPerformed(evt);
             }
         });
-        jPanel3.add(clearAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
+        jPanel3.add(clearAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 790, 60));
 
