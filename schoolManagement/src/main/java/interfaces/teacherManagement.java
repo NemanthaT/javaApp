@@ -50,6 +50,7 @@ public class teacherManagement extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        closeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -173,6 +174,15 @@ public class teacherManagement extends javax.swing.JFrame {
         jLabel6.setText("Teacher Manager");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        closeBtn.setText("X");
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 50, 40));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 590));
 
         pack();
@@ -208,6 +218,11 @@ public class teacherManagement extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_closeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,6 +261,7 @@ public class teacherManagement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ageField;
+    private javax.swing.JButton closeBtn;
     private javax.swing.JTextField contactField;
     private javax.swing.JButton delete;
     private javax.swing.JButton insert;

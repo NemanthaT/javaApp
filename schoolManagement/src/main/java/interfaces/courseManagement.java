@@ -4,6 +4,12 @@
  */
 package interfaces;
 
+import codes.dBConnector; //dB connect
+import com.mysql.cj.protocol.Resultset;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author navindu
@@ -13,8 +19,13 @@ public class courseManagement extends javax.swing.JFrame {
     /**
      * Creates new form courseManagement
      */
+    Connection connection = null;
+    Statement statement = null;
+    
+    
     public courseManagement() {
         initComponents();
+        connection = dBConnector.connection();
     }
 
     /**
@@ -40,14 +51,18 @@ public class courseManagement extends javax.swing.JFrame {
         insert = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        sField = new javax.swing.JTextField();
+        sBtn = new javax.swing.JButton();
+        clearAll = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        closeBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        viewAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,24 +120,28 @@ public class courseManagement extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 510, 190));
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTable1.setForeground(new java.awt.Color(255, 255, 102));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setBackground(new java.awt.Color(204, 204, 204));
+        table.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "id", "Name", "Description", "Credit hours"
             }
-        ));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 850, 260));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        table.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(table);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 850, 160));
 
         jPanel5.setBackground(new java.awt.Color(102, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,26 +158,56 @@ public class courseManagement extends javax.swing.JFrame {
         jPanel3.setForeground(new java.awt.Color(255, 0, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        sField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                sFieldActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
+        jPanel3.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
 
-        jButton4.setText("Enter");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        sBtn.setText("Enter");
+        sBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                sBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(637, 18, -1, -1));
+        jPanel3.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+
+        clearAll.setText("Clear All");
+        clearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllActionPerformed(evt);
+            }
+        });
+        jPanel3.add(clearAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 790, 60));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         jLabel6.setText("Course Manager");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 190, -1));
+
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        closeBtn.setText("X");
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 50, 40));
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        viewAll.setText("View All");
+        viewAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllActionPerformed(evt);
+            }
+        });
+        jPanel2.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, 90, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,33 +222,172 @@ public class courseManagement extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    
+    //searchfield
+    private void sFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+    }//GEN-LAST:event_sFieldActionPerformed
+    
+    //searchbtn
+    private void sBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        String name;
+        name = sField.getText();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String sqls = "SELECT * FROM course WHERE Name LIKE \'" + name + "%\'";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            
+            while(result.next()){
+                int id = result.getInt("CourseID");
+                String nam = result.getString("Name");
+                String des = result.getString("Description");
+                int hrs = result.getInt("Hours");
+                model.addRow(new Object[]{id, nam, des, hrs});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_sBtnActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
-
+    
+    //updatebtn
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        String name;
+        String des;
+        int hrs;
+        
+        name = cName.getText();
+        des = description.getText();
+        hrs = Integer.parseInt(hour.getText());
+        
+        if(name!=null){
+            String sqls = "UPDATE course SET Description = \'" + des + "\', Hours = " + hrs + " WHERE Name LIKE \'" + name + "\'";
+        
+            try{
+                    statement = connection.createStatement();
+                    statement.executeUpdate(sqls);
+                    System.out.println("Data updated successfully");
+                    JOptionPane.showMessageDialog(null,"Updated Successfully");
+            }
+            catch(Exception e){
+                    System.out.println("Data insertion failed");
+                    JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter course name");
+        }
+        
     }//GEN-LAST:event_updateActionPerformed
-
+    
+    //insertbtn
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        String name;
+        String des;
+        int hrs=0;
+        
+        name = cName.getText();
+        des = description.getText();
+        hrs = Integer.parseInt(hour.getText());
+        
+        String sqls = "INSERT INTO course (Name, Description, Hours) VALUES (\'"+name+"\', \'"+des+"\', "+hrs+")";
+        
+        if((des!=null) && (hrs!=0) && (name!=null)){
+            try{
+                    statement = connection.createStatement();
+                    statement.executeUpdate(sqls);
+                    System.out.println("Data inserted successfully");
+                    JOptionPane.showMessageDialog(null,"Inserted Successfully");
+                }
+            catch(Exception e){
+                    System.out.println("Data insertion failed");
+                    JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter all details");
+        }
     }//GEN-LAST:event_insertActionPerformed
-
+    
+    //deletebtn
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        String name;
+
+        name = cName.getText();
+        
+        String sqls = "DELETE * FROM course WHERE Name LIKE \'" + name + "\'";
+        
+        if(name!=null){
+            try{
+                statement = connection.createStatement();
+                statement.executeUpdate(sqls);
+                System.out.println("Data deleted successfully");
+                JOptionPane.showMessageDialog(null,"Deleted Successfully");
+            }
+            catch(Exception e){
+                System.out.println("Data deletion failed");
+                JOptionPane.showMessageDialog(null,e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Enter course name");
+        }
     }//GEN-LAST:event_deleteActionPerformed
+    //closebtn
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_closeBtnActionPerformed
+
+    //clearbtn
+    private void clearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        
+        sField.setText("");
+        cName.setText("");
+        description.setText("");
+        hour.setText("");
+    }//GEN-LAST:event_clearAllActionPerformed
+
+    //viewallbtn
+    private void viewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        
+        String sqls = "SELECT * FROM course";
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+            JOptionPane.showMessageDialog(null,"Result(s) found");
+            
+            while(result.next()){
+                int id = result.getInt("CourseID");
+                String nam = result.getString("Name");
+                String des = result.getString("Description");
+                int hrs = result.getInt("Hours");
+                model.addRow(new Object[]{id, nam, des, hrs});
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }//GEN-LAST:event_viewAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,26 +426,30 @@ public class courseManagement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cName;
+    private javax.swing.JButton clearAll;
+    private javax.swing.JButton closeBtn;
     private javax.swing.JButton delete;
     private javax.swing.JTextField description;
     private javax.swing.JTextField hour;
     private javax.swing.JButton insert;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton sBtn;
+    private javax.swing.JTextField sField;
+    private javax.swing.JTable table;
     private javax.swing.JButton update;
+    private javax.swing.JButton viewAll;
     // End of variables declaration//GEN-END:variables
 }
