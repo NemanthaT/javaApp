@@ -4,6 +4,16 @@
  */
 package interfaces;
 
+import codes.dBConnector;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author UserK
@@ -13,8 +23,39 @@ public class adminDashboard extends javax.swing.JFrame {
     /**
      * Creates new form adminDashboard
      */
+    Statement statement = null;
+    Connection connection = null;
+    
     public adminDashboard() {
         initComponents();
+        connection = dBConnector.connection();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                countPop("student", stCount);
+                countPop("course", cCount);
+                countPop("teacher", tCount);
+                countPop("studentcourse", eCount);
+            }
+        });
+    }
+    
+    public void countPop(String table, JTextField stCount){
+        String sqls = "Select * From "+ table ;
+        
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+        
+            if(result.next()){
+                int count = result.getInt(1);
+                String counts = Integer.toString(count);
+                stCount.setText(counts);
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -38,12 +79,16 @@ public class adminDashboard extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         stPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        stCount = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        tCount = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        cCount = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        eCount = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,21 +185,38 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel1.setText("Student");
 
+        stCount.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        stCount.setText("00");
+        stCount.setBorder(null);
+        stCount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stCount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stCountActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout stPanelLayout = new javax.swing.GroupLayout(stPanel);
         stPanel.setLayout(stPanelLayout);
         stPanelLayout.setHorizontalGroup(
             stPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stPanelLayout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(80, 80, 80))
+            .addGroup(stPanelLayout.createSequentialGroup()
+                .addGroup(stPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(stPanelLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jLabel1))
+                    .addGroup(stPanelLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(stCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         stPanelLayout.setVerticalGroup(
             stPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stPanelLayout.createSequentialGroup()
-                .addContainerGap(152, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addComponent(stCount, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32))
+                .addGap(28, 28, 28))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -162,19 +224,35 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel2.setText("Teachers");
 
+        tCount.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        tCount.setText("00");
+        tCount.setBorder(null);
+        tCount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tCountActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(jLabel2)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(tCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(152, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(tCount, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(32, 32, 32))
         );
@@ -184,43 +262,72 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel3.setText("Courses");
 
+        cCount.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        cCount.setText("00");
+        cCount.setBorder(null);
+        cCount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cCountActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(78, 78, 78))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(cCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(164, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(cCount, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(20, 20, 20))
+                .addGap(26, 26, 26))
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("Enrollments");
+
+        eCount.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        eCount.setText("00");
+        eCount.setBorder(null);
+        eCount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eCountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel4)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eCount, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(157, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(eCount, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(27, 27, 27))
+                .addGap(28, 28, 28))
         );
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -303,6 +410,22 @@ public class adminDashboard extends javax.swing.JFrame {
         cA.setVisible(true);
     }//GEN-LAST:event_aStdActionPerformed
 
+    private void stCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stCountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stCountActionPerformed
+
+    private void tCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCountActionPerformed
+
+    private void cCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cCountActionPerformed
+
+    private void eCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eCountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eCountActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -341,6 +464,8 @@ public class adminDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aStd;
     private javax.swing.JButton cBtn;
+    private javax.swing.JTextField cCount;
+    private javax.swing.JTextField eCount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -356,7 +481,9 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JButton stBtn;
+    private javax.swing.JTextField stCount;
     private javax.swing.JPanel stPanel;
+    private javax.swing.JTextField tCount;
     private javax.swing.JButton teaBtn;
     // End of variables declaration//GEN-END:variables
 }

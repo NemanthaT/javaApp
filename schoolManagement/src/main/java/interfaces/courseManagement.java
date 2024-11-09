@@ -70,6 +70,7 @@ public class courseManagement extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Course Name");
@@ -121,7 +122,7 @@ public class courseManagement extends javax.swing.JFrame {
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 510, 190));
 
         table.setBackground(new java.awt.Color(204, 204, 204));
-        table.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        table.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

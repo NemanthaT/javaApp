@@ -7,6 +7,8 @@ import codes.dBConnector;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -22,6 +24,14 @@ public class courseAssigning extends javax.swing.JFrame {
     public courseAssigning() {
         initComponents();
         connection = dBConnector.connection();
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                populateComboBox("StudentID", "student", stCombo);
+                populateComboBox("CourseID", "course",cCombo);
+            }
+        });
     }
 
     /**
@@ -75,6 +85,7 @@ public class courseAssigning extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        stCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
         stCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stComboActionPerformed(evt);
@@ -98,6 +109,7 @@ public class courseAssigning extends javax.swing.JFrame {
         });
         jPanel2.add(UBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 110, 30));
 
+        cCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
         cCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cComboActionPerformed(evt);
@@ -128,7 +140,7 @@ public class courseAssigning extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 150));
 
-        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
         closeBtn.setText("X");
         closeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +156,11 @@ public class courseAssigning extends javax.swing.JFrame {
         });
 
         clearAllBtn.setText("Clear All");
+        clearAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,7 +221,23 @@ public class courseAssigning extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public void populateComboBox(String id,String table, JComboBox<String> combo){
+        String sqls = "Select "+ id +" From "+ table ;
+        
+        try{
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqls);
+        
+            while(result.next()){
+                int data = result.getInt(id);
+                String dt = Integer.toString(data);
+                combo.addItem(dt);
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -212,45 +245,18 @@ public class courseAssigning extends javax.swing.JFrame {
 
     private void stComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stComboActionPerformed
         // TODO add your handling code here:
-        String sqls = "Select StudentID From student";
-        
-        try{
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sqls);
-        
-            while(result.next()){
-                int data = result.getInt("StudentID");
-                cCombo.addItem(Integer.toString(data));
-            }
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+
     }//GEN-LAST:event_stComboActionPerformed
 
     private void cComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cComboActionPerformed
         // TODO add your handling code here:
-        String sqls = "Select CourseID From course";
-        
-        try{
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sqls);
-        
-            while(result.next()){
-                int data = result.getInt("CourseID");
-                cCombo.addItem(Integer.toString(data));
-            }
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
     }//GEN-LAST:event_cComboActionPerformed
 
     private void iBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iBtnActionPerformed
         // TODO add your handling code here:
-        String sid= (String) stCombo.getSelectedItem();
+        String sid = (String) stCombo.getSelectedItem();
         String cid = (String) cCombo.getSelectedItem();
-        String sqls = "INSERT INTO studentcourse VALUES("+ Integer.parseInt(sid) +" "+ Integer.parseInt(cid) +") ";
+        String sqls = "INSERT INTO studentcourse VALUES("+ Integer.parseInt(sid) +", "+ Integer.parseInt(cid) +") ";
 
         try{
             statement = connection.createStatement();
@@ -278,8 +284,8 @@ public class courseAssigning extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Result(s) found");
             
             while(result.next()){
-                int id1 = result.getInt("CourseID");
-                int id2 = result.getInt("StudentID");
+                int id1 = result.getInt("student_id");
+                int id2 = result.getInt("course_id");
                 model.addRow(new Object[]{id1, id2});
             }
         }
@@ -297,7 +303,7 @@ public class courseAssigning extends javax.swing.JFrame {
         
         int id;
         String sqls2 = "SELECT * FROM studentcourse WHERE student_id";
-        String sqls1 = "SELECT StudentID FROM student WHERE Name like %\'" + name + "\'";
+        String sqls1 = "SELECT StudentID FROM student WHERE Name like \'" + name + "\'";
         try{
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sqls1);
@@ -323,6 +329,11 @@ public class courseAssigning extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_searchActionPerformed
+
+    private void clearAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllBtnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_clearAllBtnActionPerformed
 
     /**
      * @param args the command line arguments
