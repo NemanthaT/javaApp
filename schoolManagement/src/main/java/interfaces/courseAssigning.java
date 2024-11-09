@@ -240,6 +240,8 @@ public class courseAssigning extends javax.swing.JFrame {
     }
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         // TODO add your handling code here:
+        adminDashboard a = new adminDashboard();
+        a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
 

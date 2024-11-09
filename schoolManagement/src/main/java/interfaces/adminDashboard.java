@@ -41,7 +41,7 @@ public class adminDashboard extends javax.swing.JFrame {
     }
     
     public void countPop(String table, JTextField stCount){
-        String sqls = "Select * From "+ table ;
+        String sqls = "Select COUNT(*) From "+ table ;
         
         try{
             statement = connection.createStatement();
@@ -389,25 +389,28 @@ public class adminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         studentManagement s = new studentManagement();
         s.setVisible(true);
-        
+        this.dispose();      
     }//GEN-LAST:event_stBtnActionPerformed
 
     private void cBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBtnActionPerformed
         // TODO add your handling code here:
         courseManagement c = new courseManagement();
         c.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_cBtnActionPerformed
 
     private void teaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaBtnActionPerformed
         // TODO add your handling code here:
         teacherManagement t = new teacherManagement();
         t.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_teaBtnActionPerformed
 
     private void aStdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aStdActionPerformed
         // TODO add your handling code here:
         courseAssigning cA = new courseAssigning();
         cA.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_aStdActionPerformed
 
     private void stCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stCountActionPerformed

@@ -61,7 +61,6 @@ public class courseManagement extends javax.swing.JFrame {
         clearAll = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         closeBtn = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         viewAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,18 +196,13 @@ public class courseManagement extends javax.swing.JFrame {
         });
         jPanel1.add(closeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 50, 40));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         viewAll.setText("View All");
         viewAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewAllActionPerformed(evt);
             }
         });
-        jPanel2.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, 90, 40));
+        jPanel1.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 280, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,7 +231,7 @@ public class courseManagement extends javax.swing.JFrame {
         name = sField.getText();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
-        String sqls = "SELECT * FROM course WHERE Name LIKE \'" + name + "%\'";
+        String sqls = "SELECT * FROM course WHERE Name LIKE \'" + name + "'";
         try{
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sqls);
@@ -350,6 +344,8 @@ public class courseManagement extends javax.swing.JFrame {
     //closebtn
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         // TODO add your handling code here:
+        adminDashboard a = new adminDashboard();
+        a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
 
@@ -369,13 +365,13 @@ public class courseManagement extends javax.swing.JFrame {
     private void viewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        
+
         String sqls = "SELECT * FROM course";
         try{
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sqls);
             JOptionPane.showMessageDialog(null,"Result(s) found");
-            
+
             while(result.next()){
                 int id = result.getInt("CourseID");
                 String nam = result.getString("Name");
@@ -386,7 +382,7 @@ public class courseManagement extends javax.swing.JFrame {
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
-            
+
         }
     }//GEN-LAST:event_viewAllActionPerformed
 
@@ -439,7 +435,6 @@ public class courseManagement extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
