@@ -53,7 +53,6 @@ public class courseAssigning extends javax.swing.JFrame {
         clearAllBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 590));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -76,7 +75,6 @@ public class courseAssigning extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        stCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
         stCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stComboActionPerformed(evt);
@@ -100,7 +98,6 @@ public class courseAssigning extends javax.swing.JFrame {
         });
         jPanel2.add(UBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 110, 30));
 
-        cCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
         cCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cComboActionPerformed(evt);
@@ -251,7 +248,9 @@ public class courseAssigning extends javax.swing.JFrame {
 
     private void iBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iBtnActionPerformed
         // TODO add your handling code here:
-        String sqls = "INSERT INTO studentcourse VALUES(/'"+ stCombo.getSelectedItem() +"\' "+ cCombo.getSelectedItem() +"\') ";
+        String sid= (String) stCombo.getSelectedItem();
+        String cid = (String) cCombo.getSelectedItem();
+        String sqls = "INSERT INTO studentcourse VALUES("+ Integer.parseInt(sid) +" "+ Integer.parseInt(cid) +") ";
 
         try{
             statement = connection.createStatement();
