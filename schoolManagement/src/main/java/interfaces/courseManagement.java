@@ -323,7 +323,7 @@ public class courseManagement extends javax.swing.JFrame {
 
         name = cName.getText();
         
-        String sqls = "DELETE * FROM course WHERE Name LIKE \'" + name + "\'";
+        String sqls = "DELETE FROM course WHERE Name LIKE \'" + name + "\'";
         
         if(name!=null){
             try{
