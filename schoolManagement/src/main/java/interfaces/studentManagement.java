@@ -181,7 +181,7 @@ public class studentManagement extends javax.swing.JFrame {
         });
         jPanel3.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 519, -1));
 
-        sBtn.setText("Enter");
+        sBtn.setText("Search");
         sBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sBtnActionPerformed(evt);
@@ -252,7 +252,7 @@ public class studentManagement extends javax.swing.JFrame {
         name = sField.getText();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
-        String sqls = "SELECT * FROM student WHERE Name LIKE \'" + name + "%\'";
+        String sqls = "SELECT * FROM student WHERE Name LIKE \'%" + name + "%\'";
         try{
             model.setRowCount(0);
             statement = connection.createStatement();
@@ -353,7 +353,7 @@ public class studentManagement extends javax.swing.JFrame {
         nameField.setText("");
         ageField.setText("");
         addressField.setText("");
-        genderCombo.setSelectedItem("");
+        genderCombo.setSelectedItem("Student");
     }//GEN-LAST:event_clearAllActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed

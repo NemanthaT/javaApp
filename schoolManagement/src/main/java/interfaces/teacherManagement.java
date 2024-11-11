@@ -169,7 +169,7 @@ public class teacherManagement extends javax.swing.JFrame {
         });
         jPanel3.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
 
-        sBtn.setText("Enter");
+        sBtn.setText("Search");
         sBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sBtnActionPerformed(evt);
@@ -227,7 +227,7 @@ public class teacherManagement extends javax.swing.JFrame {
         name = sField.getText();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
-        String sqls = "SELECT * FROM teacher WHERE Name LIKE \'" + name + "%\'";
+        String sqls = "SELECT * FROM teacher WHERE Name LIKE \'%" + name + "%\'";
         try{
             model.setRowCount(0);
             state = conn.createStatement();
