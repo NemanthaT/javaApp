@@ -58,8 +58,8 @@ public class teacherManagement extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        sField = new javax.swing.JTextField();
+        sBtn = new javax.swing.JButton();
         clearAll = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         closeBtn = new javax.swing.JButton();
@@ -162,20 +162,20 @@ public class teacherManagement extends javax.swing.JFrame {
         jPanel3.setForeground(new java.awt.Color(255, 0, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        sField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                sFieldActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
+        jPanel3.add(sField, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 18, 519, -1));
 
-        jButton4.setText("Enter");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        sBtn.setText("Enter");
+        sBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                sBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+        jPanel3.add(sBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
 
         clearAll.setText("Clear All");
         clearAll.addActionListener(new java.awt.event.ActionListener() {
@@ -213,22 +213,23 @@ public class teacherManagement extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void sFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_sFieldActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void sBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sBtnActionPerformed
         // TODO add your handling code here:
         String name;
-        name = nameField.getText();
+        name = sField.getText();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
         String sqls = "SELECT * FROM teacher WHERE Name LIKE \'" + name + "%\'";
         try{
+            model.setRowCount(0);
             state = conn.createStatement();
             ResultSet result = state.executeQuery(sqls);
             JOptionPane.showMessageDialog(null,"Result(s) found");
@@ -239,14 +240,14 @@ public class teacherManagement extends javax.swing.JFrame {
                 String contact = result.getString("Contact");
                 String subject = result.getString("Subject");
                 int age = result.getInt("Age");
-                model.addRow(new Object[]{id, name, contact, subject, age});
+                model.addRow(new Object[]{id, name, age, subject, contact});
             }
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
             
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_sBtnActionPerformed
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         String name;
@@ -425,7 +426,6 @@ public class teacherManagement extends javax.swing.JFrame {
     private javax.swing.JTextField contactField;
     private javax.swing.JButton delete;
     private javax.swing.JButton insert;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -439,9 +439,10 @@ public class teacherManagement extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField nameField;
+    private javax.swing.JButton sBtn;
+    private javax.swing.JTextField sField;
     private javax.swing.JTextField subjectField;
     private javax.swing.JTable table;
     private javax.swing.JButton update;

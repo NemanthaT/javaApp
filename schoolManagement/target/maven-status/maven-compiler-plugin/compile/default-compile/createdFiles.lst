@@ -1,4 +1,3 @@
-interfaces\grading$2.class
 interfaces\adminDashboard$8.class
 interfaces\teacherManagement$10.class
 interfaces\studentManagement$7.class
@@ -11,17 +10,14 @@ interfaces\adminDashboard$5.class
 interfaces\adminDashboard$7.class
 interfaces\courseAssigning$6.class
 interfaces\courseManagement$8.class
-interfaces\grading$1.class
 interfaces\studentManagement$3.class
 interfaces\courseAssigning$3.class
 codes\DBconnect.class
 interfaces\courseAssigning$9.class
 interfaces\adminDashboard$4.class
 interfaces\studentManagement$10.class
-interfaces\grading$5.class
 interfaces\studentManagement$6.class
 interfaces\courseManagement$1.class
-interfaces\grading.class
 interfaces\studentManagement$9.class
 interfaces\courseManagement$4.class
 interfaces\adminDashboard$1.class
@@ -35,7 +31,6 @@ interfaces\adminDashboard$3.class
 interfaces\courseAssigning$10.class
 interfaces\teacherManagement$9.class
 interfaces\adminDashboard$2.class
-interfaces\grading$4.class
 interfaces\studentManagement.class
 interfaces\courseManagement$5.class
 interfaces\studentManagement$5.class
@@ -43,7 +38,6 @@ interfaces\studentManagement$8.class
 interfaces\courseManagement$11.class
 interfaces\courseManagement$3.class
 interfaces\teacherManagement$11.class
-interfaces\grading$3.class
 interfaces\courseAssigning$8.class
 interfaces\courseAssigning.class
 interfaces\courseManagement$6.class
@@ -58,4 +52,5 @@ interfaces\adminDashboard$6.class
 interfaces\studentManagement$1.class
 interfaces\studentManagement$12.class
 interfaces\courseAssigning$1.class
+interfaces\courseAssigning$11.class
 interfaces\courseManagement$9.class

@@ -254,6 +254,7 @@ public class studentManagement extends javax.swing.JFrame {
         
         String sqls = "SELECT * FROM student WHERE Name LIKE \'" + name + "%\'";
         try{
+            model.setRowCount(0);
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sqls);
             JOptionPane.showMessageDialog(null,"Result(s) found");

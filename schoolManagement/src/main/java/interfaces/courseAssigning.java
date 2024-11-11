@@ -133,9 +133,24 @@ public class courseAssigning extends javax.swing.JFrame {
 
             },
             new String [] {
-                "courseId", "studentId"
+                "studentId", "Student Name", "courseId", "Course Name"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 150));
@@ -279,16 +294,22 @@ public class courseAssigning extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
-        String sqls = "SELECT * FROM studentcourse";
+        String sqls = """
+                      SELECT student.StudentID, student.Name AS StudentName, course.CourseID, course.Name AS CourseName
+                      FROM student
+                      INNER JOIN studentcourse ON student.StudentID = studentcourse.student_id
+                      INNER JOIN course ON studentcourse.course_id = course.CourseID;""";
         try{
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sqls);
             JOptionPane.showMessageDialog(null,"Result(s) found");
             
-            while(result.next()){
-                int id1 = result.getInt("student_id");
-                int id2 = result.getInt("course_id");
-                model.addRow(new Object[]{id1, id2});
+            while (result.next()) {
+                int studentId = result.getInt("StudentID");
+                String studentName = result.getString("StudentName");
+                int courseId = result.getInt("CourseID");
+                String courseName = result.getString("CourseName"); //
+                model.addRow(new Object[]{studentId, studentName, courseId, courseName});
             }
         }
         catch(Exception e){
@@ -303,32 +324,35 @@ public class courseAssigning extends javax.swing.JFrame {
         
         String name = sField.getText();
         
-        int id;
-        String sqls2 = "SELECT * FROM studentcourse WHERE student_id";
-        String sqls1 = "SELECT StudentID FROM student WHERE Name like \'" + name + "\'";
-        try{
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sqls1);
-            id = result.getInt("StudentID");
-            JOptionPane.showMessageDialog(null,"Result(s) found");
-            try{
-                statement = connection.createStatement();
-                result = statement.executeQuery(sqls2);
-                while(result.next()){
-                    int id1 = result.getInt("course_id");
-                    int id2 = result.getInt("student_id");
-                    model.addRow(new Object[]{id1, id2});
-                }
-            }
-            catch(Exception e){
-               JOptionPane.showMessageDialog(null, e); 
-            }
-            
+        String sqls = """
+              SELECT student.StudentID, student.Name AS StudentName, course.CourseID, course.Name AS CourseName
+              FROM student
+              INNER JOIN studentcourse ON student.StudentID = studentcourse.student_id
+              INNER JOIN course ON studentcourse.course_id = course.CourseID
+              WHERE student.Name LIKE ?;""";
+        
+        try {
+            PreparedStatement pstatement = connection.prepareStatement(sqls);
+            pstatement.setString(1, "%"+ name +"%");
+            System.out.println("'%"+ name +"%'");
+            ResultSet result = pstatement.executeQuery();
 
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-            
+            model.setRowCount(0);
+
+            if (!result.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(null, "No results found for " + name);
+            } else {
+                while (result.next()) {
+                    int studentId = result.getInt("StudentID");
+                    String studentNameResult = result.getString("StudentName");
+                    int courseId = result.getInt("CourseID");
+                    String courseName = result.getString("CourseName");
+                    model.addRow(new Object[]{studentId, studentNameResult, courseId, courseName});
+                }
+                JOptionPane.showMessageDialog(null, "Result(s) found for " + name);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_searchActionPerformed
 
