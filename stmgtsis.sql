@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 07:56 AM
+-- Generation Time: Nov 11, 2024 at 10:44 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,6 +35,29 @@ CREATE TABLE `course` (
   `Hours` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`CourseID`, `Name`, `Instructor`, `Description`, `Hours`) VALUES
+(1, 'Mathematics', 'Dr. John Doe', 'An introductory course on Algebra and Geometry', 60),
+(2, 'Physics', 'Dr. Jane Smith', 'Fundamentals of Physics including mechanics and waves', 50),
+(3, 'Chemistry', 'Dr. Emily White', 'Basic principles of chemistry', 55),
+(4, 'Biology', 'Dr. Alan Brown', 'Introduction to cell biology and genetics', 60),
+(5, 'English Literature', 'Ms. Laura Green', 'Study of classic and modern literature', 45),
+(6, 'History', 'Mr. Robert Black', 'World History from ancient to modern times', 50),
+(7, 'Geography', 'Ms. Lisa White', 'Physical and human geography', 40),
+(8, 'Computer Science', 'Mr. Paul Grey', 'Basics of programming and algorithms', 65),
+(9, 'Art', 'Ms. Anna Blue', 'Art history and techniques', 35),
+(10, 'Music', 'Mr. David Brown', 'Introduction to music theory and practice', 30),
+(11, 'Economics', 'Dr. Sarah Green', 'Principles of microeconomics and macroeconomics', 50),
+(12, 'Philosophy', 'Dr. Henry Black', 'Philosophical concepts and schools of thought', 45),
+(13, 'Sociology', 'Dr. Emily White', 'Introduction to social structures and institutions', 40),
+(14, 'Psychology', 'Dr. Laura Green', 'Study of the human mind and behavior', 55),
+(15, 'Political Science', 'Dr. Robert Grey', 'Theory and practice of government', 60),
+(18, 'Information Sytem', NULL, 'Info dete', 65),
+(19, 'Maths', NULL, 'Maths dete', 60);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +72,27 @@ CREATE TABLE `student` (
   `Address` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`StudentID`, `Name`, `Age`, `Gender`, `Address`) VALUES
+(1, 'Alice Brown', 16, 'Female', '123 Maple Street'),
+(2, 'Bob Green', 17, 'Male', '456 Oak Avenue'),
+(3, 'Charlie Black', 16, 'Male', '789 Pine Road'),
+(4, 'Daisy White', 15, 'Female', '101 Birch Lane'),
+(5, 'Evan Grey', 17, 'Male', '202 Cedar Street'),
+(6, 'Fiona Blue', 16, 'Female', '303 Spruce Avenue'),
+(7, 'George Red', 15, 'Male', '404 Walnut Blvd'),
+(8, 'Hannah Yellow', 16, 'Female', '505 Cherry Lane'),
+(9, 'Ivy Orange', 17, 'Female', '606 Chestnut Drive'),
+(10, 'Jack Purple', 16, 'Male', '707 Ash Street'),
+(11, 'Kara Silver', 15, 'Female', '808 Pineapple Ave'),
+(12, 'Leo Gold', 16, 'Male', '909 Apple Blvd'),
+(13, 'Mona Bronze', 17, 'Female', '1010 Oakwood St'),
+(14, 'Nina Copper', 15, 'Female', '1111 Maple Lane'),
+(15, 'Omar Green', 17, 'Male', '1212 Cedar Drive');
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +103,34 @@ CREATE TABLE `studentcourse` (
   `student_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `studentcourse`
+--
+
+INSERT INTO `studentcourse` (`student_id`, `course_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(15, 12),
+(5, 19);
 
 -- --------------------------------------------------------
 
@@ -74,6 +146,27 @@ CREATE TABLE `teacher` (
   `Contact` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `teacher`
+--
+
+INSERT INTO `teacher` (`TeacherID`, `Name`, `Subject`, `Age`, `Contact`) VALUES
+(1, 'Dr. John Doe', 'Mathematics', 45, '555-1234'),
+(2, 'Dr. Jane Smith', 'Physics', 40, '555-5678'),
+(3, 'Dr. Emily White', 'Chemistry', 38, '555-9012'),
+(4, 'Dr. Alan Brown', 'Biology', 42, '555-3456'),
+(5, 'Ms. Laura Green', 'English Literature', 37, '555-7890'),
+(6, 'Mr. Robert Black', 'History', 50, '555-2345'),
+(7, 'Ms. Lisa White', 'Geography', 33, '555-6789'),
+(8, 'Mr. Paul Grey', 'Computer Science', 36, '555-1111'),
+(9, 'Ms. Anna Blue', 'Art', 29, '555-2222'),
+(10, 'Mr. David Brown', 'Music', 44, '555-3333'),
+(11, 'Dr. Sarah Green', 'Economics', 41, '555-4444'),
+(12, 'Dr. Henry Black', 'Philosophy', 53, '555-5555'),
+(13, 'Dr. Emily White', 'Sociology', 39, '555-6666'),
+(14, 'Dr. Laura Green', 'Psychology', 48, '555-7777'),
+(15, 'Dr. Robert Grey', 'Political Science', 46, '555-8888');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +177,30 @@ CREATE TABLE `teachercourse` (
   `teacher_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachercourse`
+--
+
+INSERT INTO `teachercourse` (`teacher_id`, `course_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(1, 3),
+(2, 4),
+(3, 5);
 
 --
 -- Indexes for dumped tables
@@ -129,19 +246,19 @@ ALTER TABLE `teachercourse`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `StudentID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `StudentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `TeacherID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `TeacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
