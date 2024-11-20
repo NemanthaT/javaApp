@@ -12,7 +12,7 @@ public class DBconnect {
             // Use the updated MySQL driver class name
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Update the URL format
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/stmgtsis", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/stmgtsis", "root", "20021213");
 
             // Connection successful message
             JOptionPane.showMessageDialog(null, "Database connected successfully!");

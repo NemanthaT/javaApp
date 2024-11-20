@@ -19,7 +19,7 @@ public class dBConnector {
     
             String connectString = "jdbc:mysql://localhost:3306/stmgtsis";
             String username = "root";
-            String password = "";
+            String password = "20021213";
             Connection connection = null;
             //Database connection
             try{
